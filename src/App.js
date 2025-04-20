@@ -30,9 +30,12 @@ function App() {
     const eventTime = new Date(event.start).getTime();
     const reminderTime = eventTime - 10 * 60 * 1000; // 10 minutes before event
 
+    // Check if the reminder time is in the future, otherwise set it immediately
+    const delayTime = reminderTime > Date.now() ? reminderTime - Date.now() : 0;
+
     setTimeout(() => {
       alert(`Reminder: Event "${event.title}" is starting soon!`);
-    }, reminderTime - Date.now());
+    }, delayTime);
   };
 
   // Add or edit events
@@ -83,11 +86,14 @@ function App() {
         ➕ Add Event
       </button>
 
-
       <CalendarView events={events} onSelectEvent={setSelectedEvent} />
 
       {selectedEvent !== null && 
-        <EventModal event={selectedEvent} onSave={handleSave} onClose={() => setSelectedEvent(null)} />}
+        <EventModal 
+          event={selectedEvent} 
+          onSave={handleSave} 
+          onClose={() => setSelectedEvent(null)} 
+        />}
     </div>
   );
 }
