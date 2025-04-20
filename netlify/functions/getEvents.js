@@ -1,3 +1,5 @@
+// getEvents.js netlify functions
+
 const { MongoClient } = require('mongodb');
 
 exports.handler = async function(event, context) {

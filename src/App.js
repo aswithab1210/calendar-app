@@ -76,6 +76,14 @@ function App() {
       {loading && <div className="spinner-border text-info" role="status"></div>}
       {error && <div className="alert alert-danger">{error}</div>}
 
+      <button
+        className="btn btn-primary floating-add-button"
+        onClick={() => setSelectedEvent({})}
+      >
+        ➕ Add Event
+      </button>
+
+
       <CalendarView events={events} onSelectEvent={setSelectedEvent} />
 
       {selectedEvent !== null && 
