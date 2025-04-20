@@ -11,3 +11,26 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+body {
+  background: radial-gradient(ellipse at center, #0f2027, #203a43, #2c5364);
+  color: #00ffea;
+}
+
+.futuristic-calendar h1 {
+  text-shadow: 0 0 10px #00ffea, 0 0 20px #00ffea;
+}
+
+.futuristic-calendar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.futuristic-calendar li {
+  background: rgba(255, 255, 255, 0.05);
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #00ffea;
+  border-radius: 10px;
+  backdrop-filter: blur(5px);
+}
