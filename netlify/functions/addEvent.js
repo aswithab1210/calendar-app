@@ -1,4 +1,4 @@
-const { MongoClient } = require('mongodb'); 
+const { MongoClient } = require('mongodb');
 
 exports.handler = async function(event, context) {
   let client;
@@ -10,10 +10,14 @@ exports.handler = async function(event, context) {
       throw new Error("MONGO_URI is not set in Netlify environment variables.");
     }
 
+    // Parse the request body
     const body = JSON.parse(event.body || '{}');
     const { title, start, end, category } = body;
 
-    // Validate data
+    // Log the request body for debugging
+    console.log('Received body:', body);
+
+    // Validate the required fields
     if (!title || !start || !end || !category) {
       return {
         statusCode: 400,
@@ -21,33 +25,38 @@ exports.handler = async function(event, context) {
       };
     }
 
+    // Connect to MongoDB
     client = new MongoClient(uri);
     await client.connect();
 
     const db = client.db("calendarDB");
     const collection = db.collection("events");
 
+    // Insert the event into the database
     const result = await collection.insertOne({ title, start, end, category });
 
+    // Return the success response
     return {
       statusCode: 200,
-      body: JSON.stringify(result.ops ? result.ops[0] : result)  // fallback for different MongoDB driver versions
+      body: JSON.stringify(result.ops ? result.ops[0] : result) // Fallback for different MongoDB driver versions
     };
 
   } catch (error) {
-    console.error("Error in addEvent function:", error);
+    // Log the error for debugging
+    console.error('Error in addEvent function:', error);
+
     return {
       statusCode: 500,
       body: JSON.stringify({ message: 'Failed to add event', error: error.message })
     };
 
   } finally {
-    // Close MongoDB connection safely
+    // Safely close the MongoDB connection
     if (client) {
       try {
         await client.close();
       } catch (closeError) {
-        console.error("Error closing MongoDB client:", closeError);
+        console.error('Error closing MongoDB client:', closeError);
       }
     }
   }
