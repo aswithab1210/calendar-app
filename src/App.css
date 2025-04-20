@@ -119,3 +119,14 @@ button:hover {
     0 0 50px #ff0080, 
     0 0 75px #ff0080;
 }
+
+.floating-add-button {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 999;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  font-size: 24px;
+}
