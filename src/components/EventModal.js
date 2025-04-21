@@ -14,9 +14,15 @@ const EventModal = ({ event, onSave, onClose }) => {
   }, [event]);
 
   const handleSave = () => {
+    if (!title || !start || !end || !category) {
+      alert("Please fill all fields.");
+      return;
+    }
+  
     const updatedEvent = { id: event ? event.id : undefined, title, start, end, category };
     onSave(updatedEvent);
   };
+  
 
   return (
     <div className="modal">
