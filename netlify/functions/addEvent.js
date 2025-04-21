@@ -1,5 +1,6 @@
 const { MongoClient } = require('mongodb');
 
+// Backend function for adding an event to MongoDB
 exports.handler = async function(event, context) {
   let client;
 
@@ -29,16 +30,18 @@ exports.handler = async function(event, context) {
     client = new MongoClient(uri);
     await client.connect();
 
-    const db = client.db("mycalendaruser"); // Updated DB name
+    const db = client.db("mycalendaruser");  // Use the correct DB name
     const collection = db.collection("events");
 
     // Insert the event into the database
     const result = await collection.insertOne({ title, start, end, category });
 
-    // Return the success response
+    // Return the full event data including the MongoDB generated ID
+    const newEvent = { id: result.insertedId, title, start, end, category };
+
     return {
       statusCode: 200,
-      body: JSON.stringify(result.ops ? result.ops[0] : result) // Fallback for different MongoDB driver versions
+      body: JSON.stringify(newEvent)  // Send the full event data back
     };
 
   } catch (error) {
