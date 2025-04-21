@@ -2,8 +2,7 @@ import React from "react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import FullCalendar from '@fullcalendar/react';
-
-
+ 
 const CalendarView = ({ events, onSelectEvent }) => {
   
   // Event categories and colors

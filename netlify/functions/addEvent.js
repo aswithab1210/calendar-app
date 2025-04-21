@@ -29,7 +29,7 @@ exports.handler = async function(event, context) {
     client = new MongoClient(uri);
     await client.connect();
 
-    const db = client.db("calendarDB");
+    const db = client.db("mycalendaruser"); // Updated DB name
     const collection = db.collection("events");
 
     // Insert the event into the database
